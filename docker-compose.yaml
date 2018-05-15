@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  mq:
+    image: redis
+    restart: always
+
+  worker:
+    build: .
+    command: image-conveyor-worker
+    volumes:
+      - .:/code
+    restart: always
+    depends_on:
+      - mq
+
+  api:
+    build: .
+    command: image-conveyor-api
+    volumes:
+      - .:/code
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - mq

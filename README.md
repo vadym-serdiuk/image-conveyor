@@ -1,1 +1,1 @@
-# image-conveyor
+# Processing images in miltiprocessing mode.

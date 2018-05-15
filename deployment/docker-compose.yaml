@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  mq:
+    image: redis
+    restart: always
+
+  worker:
+    image: voldemare/image-conveyor
+    command: image-conveyor-worker
+    restart: always
+    depends_on:
+      - mq
+
+  api:
+    image: voldemare/image-conveyor
+    command: image-conveyor-api
+    ports:
+      - "8082:8080"
+    restart: always
+    depends_on:
+      - mq
